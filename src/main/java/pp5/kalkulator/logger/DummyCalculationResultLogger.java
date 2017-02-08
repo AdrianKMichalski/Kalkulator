@@ -19,6 +19,8 @@ public class DummyCalculationResultLogger implements CalculationResultLogger {
 
     @Override
     public CalculationResult read(String pCode) {
-        return new CalculationResult(CalculationType.NETTO_TO_BRUTTO, 5000.0, 6000.0);
+        CalculationResult calculationResult = new CalculationResult(CalculationType.NETTO_TO_BRUTTO, 5000.0, 6000.0);
+        log.info("Reading " + calculationResult);
+        return calculationResult;
     }
 }

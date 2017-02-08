@@ -1,12 +1,11 @@
 package pp5.kalkulator.logger;
 
 import pp5.kalkulator.CalculationResult;
-import pp5.kalkulator.CalculationType;
 
 /**
  * @author Adrian Michalski
  */
-interface CalculationResultLogger {
+public interface CalculationResultLogger {
 
     void save(CalculationResult pCalculationResult);
 
