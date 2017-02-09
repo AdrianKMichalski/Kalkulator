@@ -11,18 +11,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Adrian Michalski
  */
-public class CSVCalculationResultLogger implements CalculationResultLogger {
+public class CSVCalculationResultLogger extends MD5HashGenerator implements CalculationResultLogger {
 
     private static final String CSV_RESULTS_RESOURCE = "csv/results.csv";
 
@@ -35,7 +30,7 @@ public class CSVCalculationResultLogger implements CalculationResultLogger {
     }
 
     @Override
-    public void save(CalculationResult pCalculationResult) {
+    public String save(CalculationResult pCalculationResult) {
 
         String code = generateHash();
 
@@ -58,22 +53,8 @@ public class CSVCalculationResultLogger implements CalculationResultLogger {
         } catch (IOException pE) {
             pE.printStackTrace();
         }
-    }
 
-    private String generateHash() {
-        try {
-            long timestamp = new Timestamp(System.currentTimeMillis()).getTime();
-            long randomLong = new Random().nextLong();
-
-            String toHash = "CALCULATOR" + timestamp + randomLong;
-
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(toHash.getBytes());
-            BigInteger bigInt = new BigInteger(1, digest);
-            return bigInt.toString(16).substring(0, 12);
-        } catch (NoSuchAlgorithmException pE) {
-            throw new RuntimeException(pE);
-        }
+        return code;
     }
 
     @Override

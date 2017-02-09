@@ -7,7 +7,7 @@ import pp5.kalkulator.CalculationResult;
  */
 public interface CalculationResultLogger {
 
-    void save(CalculationResult pCalculationResult);
+    String save(CalculationResult pCalculationResult);
 
     CalculationResult read(String pCode);
 

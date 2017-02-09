@@ -13,8 +13,9 @@ public class DummyCalculationResultLogger implements CalculationResultLogger {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public void save(CalculationResult pCalculationResult) {
+    public String save(CalculationResult pCalculationResult) {
         log.info("Saved " + pCalculationResult);
+        return "ABC123";
     }
 
     @Override
