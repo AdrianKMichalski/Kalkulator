@@ -2,7 +2,7 @@ package pp5.kalkulator.logger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pp5.kalkulator.CalculationResult;
+import pp5.kalkulator.Calculation;
 import pp5.kalkulator.CalculationType;
 
 import java.sql.*;
@@ -15,7 +15,7 @@ public class PostgreSQLCalculationResultLogger extends MD5HashGenerator implemen
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public String save(CalculationResult pCalculationResult) {
+    public String save(Calculation pCalculation) {
         Connection connection = null;
         Statement statement = null;
         String code = generateHash();
@@ -30,9 +30,9 @@ public class PostgreSQLCalculationResultLogger extends MD5HashGenerator implemen
             statement = connection.createStatement();
             String sql = "INSERT INTO results (code, calculation_type, input, output) VALUES ("
                     + "'" + code + "', "
-                    + "'" + pCalculationResult.getCalculationType().name() + "', "
-                    + pCalculationResult.getInput() + ", "
-                    + pCalculationResult.getOutput() + ");";
+                    + "'" + pCalculation.getCalculationType().name() + "', "
+                    + pCalculation.getInput() + ", "
+                    + pCalculation.getOutput() + ");";
 
             statement.executeUpdate(sql);
 
@@ -49,8 +49,8 @@ public class PostgreSQLCalculationResultLogger extends MD5HashGenerator implemen
     }
 
     @Override
-    public CalculationResult read(String pCode) {
-        CalculationResult result = null;
+    public Calculation read(String pCode) {
+        Calculation result = null;
 
         try {
             Connection connection = null;
@@ -70,7 +70,7 @@ public class PostgreSQLCalculationResultLogger extends MD5HashGenerator implemen
                 double input = resultSet.getDouble("input");
                 double output = resultSet.getDouble("output");
 
-                result = new CalculationResult(CalculationType.valueOf(calculationType), input, output);
+                result = new Calculation(CalculationType.valueOf(calculationType), input, output);
             }
 
             resultSet.close();

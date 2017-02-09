@@ -5,36 +5,21 @@ package pp5.kalkulator;
  */
 public class CalculationResult {
 
-    private CalculationType calculationType;
+    private String code;
 
-    private double input;
+    private Calculation calculation;
 
-    private double output;
-
-    public CalculationResult(CalculationType pCalculationType, double pInput, double pOutput) {
-        calculationType = pCalculationType;
-        input = pInput;
-        output = pOutput;
+    public CalculationResult(String pCode, Calculation pCalculation) {
+        code = pCode;
+        calculation = pCalculation;
     }
 
-    public CalculationType getCalculationType() {
-        return calculationType;
+    public String getCode() {
+        return code;
     }
 
-    public double getInput() {
-        return input;
+    public Calculation getCalculation() {
+        return calculation;
     }
 
-    public double getOutput() {
-        return output;
-    }
-
-    @Override
-    public String toString() {
-        return "CalculationResult{" +
-                "calculationType=" + calculationType +
-                ", input=" + input +
-                ", output=" + output +
-                '}';
-    }
 }

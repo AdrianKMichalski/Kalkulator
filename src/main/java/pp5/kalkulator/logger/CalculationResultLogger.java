@@ -1,14 +1,14 @@
 package pp5.kalkulator.logger;
 
-import pp5.kalkulator.CalculationResult;
+import pp5.kalkulator.Calculation;
 
 /**
  * @author Adrian Michalski
  */
 public interface CalculationResultLogger {
 
-    String save(CalculationResult pCalculationResult);
+    String save(Calculation pCalculation);
 
-    CalculationResult read(String pCode);
+    Calculation read(String pCode);
 
 }

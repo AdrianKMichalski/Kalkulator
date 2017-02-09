@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
-import pp5.kalkulator.CalculationResult;
+import pp5.kalkulator.Calculation;
 import pp5.kalkulator.CalculationType;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class CSVCalculationResultLogger extends MD5HashGenerator implements Calc
     }
 
     @Override
-    public String save(CalculationResult pCalculationResult) {
+    public String save(Calculation pCalculation) {
 
         String code = generateHash();
 
@@ -40,9 +40,9 @@ public class CSVCalculationResultLogger extends MD5HashGenerator implements Calc
 
             List<String> resultRecord = ImmutableList.of(
                     code,
-                    pCalculationResult.getCalculationType().name(),
-                    String.valueOf(pCalculationResult.getInput()),
-                    String.valueOf(pCalculationResult.getOutput())
+                    pCalculation.getCalculationType().name(),
+                    String.valueOf(pCalculation.getInput()),
+                    String.valueOf(pCalculation.getOutput())
             );
 
             csvPrinter.printRecord(resultRecord);
@@ -58,7 +58,7 @@ public class CSVCalculationResultLogger extends MD5HashGenerator implements Calc
     }
 
     @Override
-    public CalculationResult read(String pCode) {
+    public Calculation read(String pCode) {
         try {
             FileReader fileReader = new FileReader(csvFile);
             CSVParser csvParser = new CSVParser(fileReader, CSVFormat.DEFAULT);
@@ -66,7 +66,7 @@ public class CSVCalculationResultLogger extends MD5HashGenerator implements Calc
             return csvParser.getRecords().stream()
                     .filter(record -> record.get(0).equals(pCode))
                     .findFirst()
-                    .map(record -> new CalculationResult(
+                    .map(record -> new Calculation(
                             CalculationType.valueOf(record.get(1)),
                             Double.parseDouble(record.get(2)),
                             Double.parseDouble(record.get(3))

@@ -34,8 +34,9 @@ public class Calculator {
 
     public CalculationResult calculate(CalculationType pCalculationType, double pInput) {
         Double calculationOutput = CALCULATION_TYPE_TO_FUNCTION.get(pCalculationType).apply(pInput);
-        CalculationResult calculationResult = new CalculationResult(pCalculationType, pInput, calculationOutput);
-        resultLogger.save(calculationResult); // TODO: wyprowadzić kod kalkulacji na wierzch
-        return calculationResult;
+        Calculation calculation = new Calculation(pCalculationType, pInput, calculationOutput);
+        String returnedCode = resultLogger.save(calculation);
+
+        return new CalculationResult(returnedCode, calculation);
     }
 }

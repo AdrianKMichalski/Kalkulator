@@ -36,7 +36,7 @@ public class ConsoleApplication {
             scanner.nextLine();
             System.out.println("Wprowadź kod:");
             String code = scanner.nextLine().trim().toLowerCase();
-            CalculationResult resultFromLogger = resultLogger.read(code);
+            Calculation resultFromLogger = resultLogger.read(code);
             if (resultFromLogger != null) {
                 printNiceResult(resultFromLogger);
             } else {
@@ -46,7 +46,8 @@ public class ConsoleApplication {
             System.out.println("Podaj kwotę:");
             double amount = scanner.nextDouble();
             CalculationResult result = calculator.calculate(CalculationType.values()[calculationType], amount);
-            printNiceResult(result);
+            printNiceResult(result.getCalculation());
+            System.out.println("Twój unikalny kod kalkulacji: " + result.getCode());
         }
     }
 
@@ -54,7 +55,7 @@ public class ConsoleApplication {
         new ConsoleApplication();
     }
 
-    private void printNiceResult(CalculationResult pResult) {
+    private void printNiceResult(Calculation pResult) {
         System.out.format(pResult.getCalculationType().getResultFormat(),
                 pResult.getInput(),
                 pResult.getOutput());
